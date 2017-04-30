@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JS</title>
+
+  </head>
+  <body>
+    <form id="form">
+  <!--  <input type="text" placeholder="Text..." id="input" style="height:50px;width:500px;"> -->
+      <br/>
+      <textarea rows="4" cols="50" placeholder="Text..." id="input" style="width:50%"></textarea>
+      <br/>
+      <a href="#" value="Submit" id="submit" onclick="runProgram()" style="text-decoration:none;">Submit</a>
+   </form>
+   <p id="response" style="width:50%;"></p>
+  </body>
+</html>
+<script>
+
+function changeText(word) {
+
+  var data = word;
+
+
+  console.log(data.length);
+
+  var punctuationless = data.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+  var data2 = punctuationless.replace(/\s{2,}/g," ");
+
+  var haspunc = false;
+  if(/[.,\/#!$%\^&\*;:{}=\-_`~()]/.test(data)) {
+  var n = data.indexOf(/[.,\/#!$%\^&\*;:{}=\-_`~()]/);
+  var txt2 = data.slice(0, n) + " " + data.slice(n);
+  var data = txt2.split(" ")[0];
+  haspunc = true;
+  }
+  console.log("TEST " + txt2);
+  if(data2.length <= 2) {
+    return data;
+  } else {
+    var first = data.charAt(0);
+    var last = data.slice(-1);
+    console.log("LAST "  + last);
+    var mid = "";
+
+
+    for (var x = 0; x < data.length; x++)
+    {
+      var c = data.charAt(x);
+
+        if(x != 0 && x != data.length-1) {
+            mid += c;
+        }
+      }
+
+
+    }
+
+    var shuffled = mid.split('').sort(function(){
+      return 0.5-Math.random()
+    }).join('');
+    if(haspunc) {
+    return first + shuffled + last+txt2.split(" ")[1];;
+} else {
+  return first + shuffled + last
+}
+}
+function runProgram() {
+  var data = document.getElementById("input").value;
+  var finalstring = "";
+  data.split(" ").forEach(function (item) {
+      finalstring += changeText(item) + " ";
+  });
+  console.log(finalstring);
+  document.getElementById("response").innerHTML = finalstring;
+}
+
+</script>
